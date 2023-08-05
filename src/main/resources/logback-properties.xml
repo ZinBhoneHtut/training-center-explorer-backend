@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<included>
+	<conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+	<conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+
+    <property name="LOG_PATH" value="./log"/>
+    <property name="LOG_CHARSET" value="UTF-8"/>
+    <property name="LOG_PATTERN_SIMPLE" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [ %-5level ] [%thread] %logger{80} - %msg%n%throwable"/>
+    <property name="LOG_PATTERN_DETAIL"
+              value="${CONSOLE_LOG_PATTERN:-%d{yyyy-MM-dd HH:mm:ss.SSS} [ %-5level ] [%thread] [${PID:-0} - %mdc{sessionId:-0}] [%mdc{username:-System} - %mdc{ipAddress:-0.0.0.0}] [%logger{40} %file:%line] - %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+</included>

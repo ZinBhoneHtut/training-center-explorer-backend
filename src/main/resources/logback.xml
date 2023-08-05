@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+    <include resource="logback-properties.xml" />
+    <include resource="console-appenders.xml" />
+    <include resource="file-appenders.xml" />
+
+    <!-- Root Logger -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE_SIMPLE" />
+    </root>
+
+    <logger name="com.zbh.tce" level="DEBUG" additivity="false">
+        <appender-ref ref="CONSOLE_DETAIL" />
+        <appender-ref ref="ROLLING_FILE" />
+    </logger>
+
+    <logger name="com.zbh.tce.controller" level="TRACE" additivity="false">
+        <appender-ref ref="CONSOLE_DETAIL" />
+        <appender-ref ref="ROLLING_FILE" />
+    </logger>
+
+</configuration>

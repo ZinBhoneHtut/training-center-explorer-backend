@@ -1,4 +1,4 @@
-package com.zbh.tce.query.annotation;
+package com.zbh.tce.common.query;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

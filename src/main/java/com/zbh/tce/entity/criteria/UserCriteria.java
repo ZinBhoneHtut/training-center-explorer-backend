@@ -1,14 +1,17 @@
 package com.zbh.tce.entity.criteria;
 
-import com.zbh.tce.query.annotation.Query;
-import com.zbh.tce.query.annotation.Query.Type;
-import lombok.Data;
+import com.zbh.tce.common.query.Query;
+import com.zbh.tce.common.query.Query.Type;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
+@ToString
 public class UserCriteria {
 
     @Query(blurry = "name,email")
@@ -23,7 +26,7 @@ public class UserCriteria {
     @Query(type = Type.EQUAL)
     private String email;
 
-    @Query(type = Type.BETWEEN, subAttName = "createdDate")
-    private List<Date> audit = new ArrayList<>();
+    @Query(type = Type.BETWEEN, subAttName = "audit.createdDate")
+    private List<String> createdDate = new ArrayList<>();
 
 }

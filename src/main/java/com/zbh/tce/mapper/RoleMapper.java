@@ -16,4 +16,11 @@ public interface RoleMapper extends BaseMapper<Role, RoleDTO> {
 
 	@Mapping(target = "audit", ignore = true)
 	Role toEntity(RoleDTO roleDTO);
+
+	@Mapping(
+			source = "audit.createdDate",
+			target = "createdDate",
+			qualifiedBy = DateToStringMapper.class
+	)
+	RoleDTO toDTO(Role role);
 }

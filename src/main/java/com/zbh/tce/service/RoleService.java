@@ -1,8 +1,8 @@
 package com.zbh.tce.service;
 
+import com.zbh.tce.common.query.QueryHelp;
 import com.zbh.tce.entity.Role;
 import com.zbh.tce.entity.criteria.RoleCriteria;
-import com.zbh.tce.query.utils.QueryHelp;
 import com.zbh.tce.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -47,6 +47,11 @@ public class RoleService implements CrudService<Role, RoleCriteria> {
     @Override
     public Role save(Role role) {
         return roleRepository.save(role);
+    }
+
+    @Override
+    public void update(long id, Role role) {
+
     }
 
     @Override

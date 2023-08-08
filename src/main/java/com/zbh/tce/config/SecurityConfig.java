@@ -22,7 +22,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
-		    .csrf().ignoringAntMatchers("/h2-console/**");
+		    .csrf().ignoringAntMatchers("/h2-console/**").disable();
 
 		http.authorizeRequests()
 			.antMatchers(PUBLIC_ACCESS).permitAll()

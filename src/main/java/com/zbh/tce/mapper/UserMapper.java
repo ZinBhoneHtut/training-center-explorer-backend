@@ -7,28 +7,26 @@ import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.ReportingPolicy;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * 
  * @author ZinBhoneHtut
- *
  */
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(
+        componentModel = "spring",
+        unmappedTargetPolicy = ReportingPolicy.IGNORE,
+        uses = RoleMapper.class
+)
 public interface UserMapper extends BaseMapper<User, UserDTO> {
-	
-	@Mapping(target = "audit", ignore = true)
-	User toEntity(UserDTO dto);
 
-	UserDTO toDTO(User user);
-	
-	@Named("formatDate")
-	public static String formatDate(Date date) {
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yy");
-		if(date == null) {
-			return "N/A";
-		}
-		return dateFormatter.format(date).toString();
-	}
+    User toEntity(UserDTO dto);
+
+    @Mapping(source = "audit.createdDate", target = "createdDate", qualifiedByName = "formatDate")
+    UserDTO toDTO(User user);
+
+    @Named("formatDate")
+    static String formatDate(Date date) {
+        return BaseMapper.formatDate(date);
+    }
+
 }

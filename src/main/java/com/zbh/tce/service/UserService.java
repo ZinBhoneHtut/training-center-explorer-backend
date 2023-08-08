@@ -1,8 +1,9 @@
 package com.zbh.tce.service;
 
+import com.zbh.tce.common.query.QueryHelp;
 import com.zbh.tce.entity.User;
 import com.zbh.tce.entity.criteria.UserCriteria;
-import com.zbh.tce.query.utils.QueryHelp;
+import com.zbh.tce.exception.ResourceNotFoundException;
 import com.zbh.tce.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -49,6 +50,17 @@ public class UserService implements CrudService<User, UserCriteria> {
     }
 
     @Override
+    public void update(long id, User user) throws ResourceNotFoundException {
+       User _user = this.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
+        _user.setName(user.getName());
+        _user.setEmail(user.getEmail());
+        _user.setTelephone(user.getTelephone());
+        _user.setGender(user.getGender());
+        _user.setRoles(user.getRoles());
+        this.save(_user);
+    }
+
+    @Override
     public void deleteById(long id) {
         userRepository.deleteById(id);
     }
@@ -61,4 +73,5 @@ public class UserService implements CrudService<User, UserCriteria> {
     public boolean isUserExists(String userName) {
         return userRepository.existsByName(userName);
     }
+
 }

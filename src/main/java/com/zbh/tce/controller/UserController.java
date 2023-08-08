@@ -22,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 import static com.zbh.tce.common.constant.UrlConstant.USER_API;
 
@@ -41,10 +42,18 @@ class UserController extends BaseController {
     private final RoleMapper roleMapper;
 
     @GetMapping
-    public ResponseEntity<DataTablesOutput<UserDTO>> getAllUsers(UserCriteria userCriteria, Pageable pageable) {
-        log.trace("Inside getAllUsers method");
+    public ResponseEntity<DataTablesOutput<UserDTO>> getUsersWithCriteria(UserCriteria userCriteria, Pageable pageable) {
+        log.trace("Inside getUsersWithCriteria method");
+        log.debug("User criteria: {} | Pageable: {}", userCriteria.toString(), pageable.toString());
         Page<User> userPage = userService.findAll(userCriteria, pageable);
         return new ResponseEntity<>(createDataTableOutput(userPage.map(userMapper::toDTO), userService.count()), HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<UserDTO>> getAllUsers() {
+        log.trace("Inside getAllUsers method");
+        List<UserDTO> userDTOList = userMapper.toDTO(userService.findAll());
+        return ResponseEntity.ok().body(userDTOList);
     }
 
     @GetMapping("/{id}")
@@ -69,7 +78,7 @@ class UserController extends BaseController {
         log.trace("Inside createUser method");
         try {
             User user = userMapper.toEntity(userDTO);
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            user.setPassword(passwordEncoder.encode("changeme"));
             userService.save(user);
             log.info("User was created successfully");
         } catch (Exception e) {
@@ -81,11 +90,9 @@ class UserController extends BaseController {
     }
 
     @PutMapping
-    public ResponseEntity<HttpStatus> updateUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<HttpStatus> updateUser(@RequestParam(required = true, value = "id") long id, @Valid @RequestBody UserDTO userDTO) {
         log.trace("Inside updateUser method");
-        boolean isUserExists = userService.isUserExists(userDTO.getName());
-        if (isUserExists) throw new ResourceNotFoundException("User not found.");
-        userService.save(userMapper.toEntity(userDTO));
+        userService.update(id, userMapper.toEntity(userDTO));
         log.info("User was updated successfully");
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

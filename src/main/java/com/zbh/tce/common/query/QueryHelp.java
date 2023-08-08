@@ -1,13 +1,11 @@
-package com.zbh.tce.query.utils;
+package com.zbh.tce.common.query;
 
-import com.zbh.tce.query.annotation.Query;
-import com.zbh.tce.query.annotation.Query.Fetch;
+import com.zbh.tce.common.utils.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 
 import javax.persistence.criteria.*;
 import java.lang.reflect.Field;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -39,7 +37,7 @@ public class QueryHelp {
                     String blurry = q.blurry();
                     String attributeName = isBlank(propName) ? field.getName() : propName;
                     String subAtt = q.subAttName();
-                    Fetch fetchType = q.fetchType();
+                    Query.Fetch fetchType = q.fetchType();
 
                     Class<?> fieldType = field.getType();
                     Object val = field.get(query);
@@ -156,14 +154,13 @@ public class QueryHelp {
                             List<Object> betweenObj = new ArrayList<>((List<Object>) val);
                             log.info("Value of date from client: {}", val);
                             List<String> between = new ArrayList<>();
-                            SimpleDateFormat DateFor = new SimpleDateFormat("yyyy-MM-dd");
-
+                            String DATE_PATTERN = "yyyy-MM-dd";
                             if (betweenObj != null && betweenObj.size() == 2) {
                                 if (betweenObj.get(0) instanceof java.util.Date) {
-                                    between.add(DateFor.format((java.util.Date) betweenObj.get(0)).concat(" 00:00"));
+                                    between.add(DateUtils.format((java.util.Date) betweenObj.get(0), DATE_PATTERN).concat(" 00:00"));
                                 }
                                 if (betweenObj.get(1) instanceof java.util.Date) {
-                                    between.add(DateFor.format((java.util.Date) betweenObj.get(1)).concat(" 23:59"));
+                                    between.add(DateUtils.format((java.util.Date) betweenObj.get(1), DATE_PATTERN).concat(" 23:59"));
                                 }
                             }
 

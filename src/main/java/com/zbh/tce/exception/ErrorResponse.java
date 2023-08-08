@@ -1,9 +1,9 @@
 package com.zbh.tce.exception;
 
+import com.zbh.tce.common.utils.DateUtils;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Getter
@@ -24,19 +24,14 @@ public class ErrorResponse {
      * @param details   the details
      */
     public ErrorResponse(Date timestamp, String status, String message, String details) {
-        this.timestamp = formatDate(timestamp);
+        this.timestamp = DateUtils.format(timestamp, "yyyy-MM-dd hh:mm:ss");
         this.status = status;
         this.message = message;
         this.details = details;
     }
 
     public void setTimestamp(Date timestamp) {
-        this.timestamp = formatDate(timestamp);
-    }
-
-    private String formatDate(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-        return formatter.format(date);
+        this.timestamp = DateUtils.format(timestamp, "yyyy-MM-dd hh:mm:ss");
     }
 
 }

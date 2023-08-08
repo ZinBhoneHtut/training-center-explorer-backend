@@ -1,9 +1,9 @@
 package com.zbh.tce.entity;
 
-import com.zbh.tce.common.enums.RoleEnum;
 import com.zbh.tce.entity.audit.Audit;
 import com.zbh.tce.entity.audit.AuditListener;
 import com.zbh.tce.entity.audit.IAudit;
+import com.zbh.tce.entity.enums.RoleEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -27,8 +27,9 @@ public class Role implements IAudit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Enumerated(value = EnumType.STRING)
     @Column(name = "role_name", length = 30, unique = true)
-    private String roleName;
+    private RoleEnum roleName;
 
     @Column(name = "description", length = 255)
     private String description;
@@ -39,9 +40,9 @@ public class Role implements IAudit {
     @Embedded
     private Audit audit;
 
-    public Role(RoleEnum roleEnum) {
-        this.roleName = roleEnum.getRoleName();
-        this.description = roleEnum.getDescription();
+    public Role(RoleEnum roleEnum, String description) {
+        this.roleName = roleEnum;
+        this.description = description;
     }
 
     @Override

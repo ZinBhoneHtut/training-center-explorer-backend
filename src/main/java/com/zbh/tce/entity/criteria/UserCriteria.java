@@ -14,7 +14,7 @@ import java.util.List;
 @ToString
 public class UserCriteria {
 
-    @Query(blurry = "name,email")
+    @Query(blurry = "name,email,telephone")
     private String blurry;
 
     @Query(type = Type.IN_LONG, propName = "id")

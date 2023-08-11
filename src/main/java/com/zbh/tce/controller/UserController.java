@@ -46,7 +46,7 @@ class UserController extends BaseController {
         log.trace("Inside getUsersWithCriteria method");
         log.debug("User criteria: {} | Pageable: {}", userCriteria.toString(), pageable.toString());
         Page<User> userPage = userService.findAll(userCriteria, pageable);
-        return new ResponseEntity<>(createDataTableOutput(userPage.map(userMapper::toDTO), userService.count()), HttpStatus.OK);
+        return new ResponseEntity<>(createDataTableOutput(userPage.map(userMapper::toDTO), userService.count(userCriteria)), HttpStatus.OK);
     }
 
     @GetMapping("/all")
@@ -70,6 +70,15 @@ class UserController extends BaseController {
         log.trace("Inside check user already exists method");
         boolean isUserAlreadyExists = !StringUtils.equalsIgnoreCase(SecurityUtils.getCurrentUsername(), userName)
                 && userService.isUserExists(userName);
+        return new ResponseEntity<>(isUserAlreadyExists, HttpStatus.OK);
+    }
+
+    //TODO: To implement after adding security
+    @GetMapping("/check-email-exists")
+    public ResponseEntity<Boolean> checkEmailAlreadyExists(@RequestParam String userName) {
+        log.trace("Inside check user already exists method");
+        boolean isUserAlreadyExists = !StringUtils.equalsIgnoreCase(SecurityUtils.getCurrentUsername(), userName)
+                && userService.isEmailExists(userName);
         return new ResponseEntity<>(isUserAlreadyExists, HttpStatus.OK);
     }
 

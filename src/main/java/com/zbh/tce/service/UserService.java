@@ -70,8 +70,17 @@ public class UserService implements CrudService<User, UserCriteria> {
         return userRepository.count();
     }
 
+    public long count(UserCriteria userCriteria) {
+        return userRepository.count(((root, query, criteriaBuilder) ->
+                QueryHelp.getPredicate(root, userCriteria, query, criteriaBuilder)));
+    }
+
     public boolean isUserExists(String userName) {
         return userRepository.existsByName(userName);
+    }
+
+    public boolean isEmailExists(String email) {
+        return userRepository.existsByEmail(email);
     }
 
 }

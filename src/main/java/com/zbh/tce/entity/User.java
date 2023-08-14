@@ -21,7 +21,9 @@ import java.util.Set;
 @Data
 @Builder
 @Entity
-@Table(name = "user_profile")
+@Table(name = "user_profile", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"name", "email"})
+})
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditListener.class)
@@ -33,10 +35,10 @@ public class User implements Serializable, IAudit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "name", length = 60, nullable = false, unique = true)
+    @Column(name = "name", length = 60, nullable = false)
     private String name;
 
-    @Column(name = "email", length = 80, unique = true)
+    @Column(name = "email", length = 80)
     private String email;
 
     @Column(name = "password", length = 255)
@@ -54,6 +56,9 @@ public class User implements Serializable, IAudit {
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private Set<Role> roles = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<RefreshToken> refreshTokens;
 
     @Embedded
     private Audit audit;

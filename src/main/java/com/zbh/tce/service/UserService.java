@@ -83,4 +83,8 @@ public class UserService implements CrudService<User, UserCriteria> {
         return userRepository.existsByEmail(email);
     }
 
+    public Optional<User> findByUsername(String userName) {
+        return userRepository.findByName(userName);
+    }
+
 }

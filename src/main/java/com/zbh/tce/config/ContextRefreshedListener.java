@@ -43,9 +43,9 @@ public class ContextRefreshedListener implements ApplicationListener<ContextRefr
     private void initRole() {
         if (roleService.count() == 0) {
             Set<Role> roles = new HashSet<>();
-            roles.add(new Role(RoleEnum.ADMIN, "For admin who can manage the core operations."));
-            roles.add(new Role(RoleEnum.MODERATOR, "For moderator who can manage the contents."));
-            roles.add(new Role(RoleEnum.USER, "For general user"));
+            roles.add(new Role(RoleEnum.ROLE_ADMIN, "For admin who can manage the core operations."));
+            roles.add(new Role(RoleEnum.ROLE_MODERATOR, "For moderator who can manage the contents."));
+            roles.add(new Role(RoleEnum.ROLE_USER, "For general user"));
             roleService.saveAll(roles);
             log.info("Role has been initialized");
         }

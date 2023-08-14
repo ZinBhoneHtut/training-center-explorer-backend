@@ -12,14 +12,28 @@ The Training Center Explorer Backend is an ongoing Java application developed us
 
 ## Getting Started
 
-1. Clone the repository: `git clone https://github.com/your-username/training-center-explorer-backend.git`
+1. Clone the repository: `https://github.com/ZinBhoneHtut/training-center-explorer-backend.git`
 2. Navigate to the project directory: `cd training-center-explorer-backend`
-3. Build and run the project: `./mvnw spring-boot:run`
+3. Configure MySQL Database:
+    - Create a MySQL schema named `tce_db`.
+    - Update `application.properties` with your MySQL username and password.
+4. Build and run the project: `./mvnw spring-boot:run`
 
 ## Usage
 
 - Interact with the provided RESTful APIs using tools like Postman or cURL.
 - Secure your API endpoints by leveraging JWT token-based authentication.
+
+## Database Options
+
+- The project uses MySQL by default. You can set up MySQL and configure it in `application-dev.properties`.
+- Alternatively, you can switch to H2 in-memory database for development by replacing `dev` with `h2` in application.properties.
+
+## Postman Workspace
+
+Explore our public Postman workspace to conveniently interact with the backend web services. The workspace includes sample requests for various API endpoints.
+
+[Postman Workspace](https://www.postman.com/zin-bhone-htut/workspace/zin-bhone-htut-public-workspace/collection/7812344-9ca4be37-ace8-4067-abb8-b782c513ec34?action=share&creator=7812344)
 
 ## License
 

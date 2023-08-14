@@ -10,6 +10,12 @@ The Training Center Explorer Backend is an ongoing Java application developed us
 - **Dynamic Pagination and Sorting**: Leverage Spring Data JPA to enable flexible data retrieval.
 - **Query Criteria**:  Utilize Spring Data JPA's specification for dynamic query criteria.
 
+## Requirements
+
+- **JDK 1.8**: Ensure you have Java Development Kit (JDK) version 1.8 or later installed.
+- **Maven 3.6.2**: The project uses Maven as the build tool. Make sure you have Maven version 3.6.2 or later installed.
+- **MySQL**: The application requires MySQL database. If you don't want to use MySql, you can use h2 database as described in [Database Options](#database_options)
+
 ## Getting Started
 
 1. Clone the repository: `https://github.com/ZinBhoneHtut/training-center-explorer-backend.git`
@@ -17,7 +23,7 @@ The Training Center Explorer Backend is an ongoing Java application developed us
 3. Configure MySQL Database:
     - Create a MySQL schema named `tce_db`.
     - Update `application.properties` with your MySQL username and password.
-4. Build and run the project: `./mvnw spring-boot:run`
+4. Build and run the project: `mvnw spring-boot:run`
 
 ## Usage
 
@@ -25,7 +31,7 @@ The Training Center Explorer Backend is an ongoing Java application developed us
 - Secure your API endpoints by leveraging JWT token-based authentication.
 
 ## Database Options
-
+<a name="database_options"></a>
 - The project uses MySQL by default. You can set up MySQL and configure it in `application-dev.properties`.
 - Alternatively, you can switch to H2 in-memory database for development by replacing `dev` with `h2` in application.properties.
 

@@ -65,21 +65,26 @@ class UserController extends BaseController {
         return ResponseEntity.ok().body(userDTO);
     }
 
+    /**
+     * Note: This method will return false even the username is in database if the user check its own username
+     */
     @GetMapping("/check-user-exists")
-    public ResponseEntity<Boolean> checkUserAlreadyExists(@RequestParam String userName) {
+    public ResponseEntity<Boolean> checkUserAlreadyExists(@RequestParam(name = "userName", required = true) String userName) {
         log.trace("Inside check user already exists method");
         boolean isUserAlreadyExists = !StringUtils.equalsIgnoreCase(SecurityUtils.getCurrentUsername(), userName)
                 && userService.isUserExists(userName);
         return new ResponseEntity<>(isUserAlreadyExists, HttpStatus.OK);
     }
 
-    //TODO: To implement after adding security
+    /**
+     * Note: This method will return false even the email is in database if the user check its own email
+     */
     @GetMapping("/check-email-exists")
-    public ResponseEntity<Boolean> checkEmailAlreadyExists(@RequestParam String userName) {
+    public ResponseEntity<Boolean> checkEmailAlreadyExists(@RequestParam(name = "email", required = true) String email) {
         log.trace("Inside check user already exists method");
-        boolean isUserAlreadyExists = !StringUtils.equalsIgnoreCase(SecurityUtils.getCurrentUsername(), userName)
-                && userService.isEmailExists(userName);
-        return new ResponseEntity<>(isUserAlreadyExists, HttpStatus.OK);
+        boolean isEmailAlreadyExists = !StringUtils.equalsIgnoreCase(SecurityUtils.getCurrentUsername(), email)
+                && userService.isEmailExists(email);
+        return new ResponseEntity<>(isEmailAlreadyExists, HttpStatus.OK);
     }
 
     @PostMapping

@@ -2,9 +2,9 @@ package com.zbh.tce.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.Date;
@@ -35,14 +35,23 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = TokenRefreshException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ErrorResponse handleTokenRefreshException(TokenRefreshException ex, WebRequest request) {
-        return new ErrorResponse(
+    public ResponseEntity<ErrorResponse> handleTokenRefreshException(TokenRefreshException ex, WebRequest request) {
+        return new ResponseEntity<>(new ErrorResponse(
                 new Date(),
                 HttpStatus.FORBIDDEN.toString(),
                 ex.getMessage(),
                 request.getDescription(false)
-        );
+        ), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(value = MissingServletRequestParameterException.class)
+    public ResponseEntity<ErrorResponse> handleMissingParameterException(MissingServletRequestParameterException exception, WebRequest request) {
+        return new ResponseEntity<>(new ErrorResponse(
+                new Date(),
+                HttpStatus.BAD_REQUEST.name(),
+                exception.getMessage(),
+                request.getDescription(false)
+        ), HttpStatus.BAD_REQUEST);
     }
 
 }

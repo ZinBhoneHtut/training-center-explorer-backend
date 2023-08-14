@@ -35,9 +35,16 @@ The Training Center Explorer Backend is an ongoing Java application developed us
 - The project uses MySQL by default. You can set up MySQL and configure it in `application-dev.properties`.
 - Alternatively, you can switch to H2 in-memory database for development by replacing `dev` with `h2` in application.properties.
 
+## JWT Token Expiration Times
+
+- **Access Token**: The access token has a duration of 1 hour.
+- **Refresh Token**: The refresh token is valid for 1 day. It can be used to obtain new access and refresh tokens without requiring user credentials.
+
 ## Postman Workspace
 
 Explore our public Postman workspace to conveniently interact with the backend web services. The workspace includes sample requests for various API endpoints.
+
+Note: To interact with the backend web services, make sure to select the `tce` environment provided in the Postman workspace.
 
 [Postman Workspace](https://www.postman.com/zin-bhone-htut/workspace/zin-bhone-htut-public-workspace/collection/7812344-9ca4be37-ace8-4067-abb8-b782c513ec34?action=share&creator=7812344)
 

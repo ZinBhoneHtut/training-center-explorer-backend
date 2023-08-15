@@ -1,5 +1,6 @@
 package com.zbh.tce.config;
 
+import com.zbh.tce.common.constant.UrlConstant;
 import com.zbh.tce.security.jwt.AuthEntryPointJwt;
 import com.zbh.tce.security.jwt.AuthTokenFilter;
 import com.zbh.tce.security.service.UserDetailsServiceImpl;
@@ -46,7 +47,7 @@ public class WebSecurityConfig {
 
     @Bean
     public WebSecurityCustomizer ignoreResources() {
-        return (webSecurity -> webSecurity.ignoring().antMatchers("/auth/**"));
+        return (webSecurity -> webSecurity.ignoring().antMatchers(UrlConstant.API_V1_AUTH+"/**"));
     }
 
     @Bean

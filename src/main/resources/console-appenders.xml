@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <included>
-    <!-- Console output setting without color -->
+    <!-- Console output setting with simple pattern -->
     <appender name="CONSOLE_SIMPLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern charset="${LOG_CHARSET}">${LOG_PATTERN_SIMPLE}</pattern>
@@ -9,7 +9,7 @@
         </encoder>
     </appender>
 
-    <!-- Console Output Settings with color and detail information -->
+    <!-- Console Output Settings with detail pattern -->
     <appender name="CONSOLE_DETAIL" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <pattern>${LOG_PATTERN_DETAIL}</pattern>

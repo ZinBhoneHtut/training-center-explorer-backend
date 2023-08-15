@@ -50,7 +50,7 @@ public class MDCFilter extends OncePerRequestFilter {
         try {
             return SecurityUtils.getCurrentUsername();
         } catch (BadRequestException ex) {
-            log.error("The username is unknown.");
+            log.warn("The username is unknown.");
             return "Anonymous";
         }
     }

@@ -7,5 +7,5 @@
     <property name="LOG_CHARSET" value="UTF-8"/>
     <property name="LOG_PATTERN_SIMPLE" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [ %-5level ] [ %-21thread ] %logger{80} - %msg%n%throwable"/>
     <property name="LOG_PATTERN_DETAIL"
-              value="${CONSOLE_LOG_PATTERN:-%d{yyyy-MM-dd HH:mm:ss.SSS} [ %-5level ] [ %-21thread ] [ ${PID:-0} - %mdc{sessionId:-0} ] [ %mdc{username:-System} - %mdc{ipAddress:-0.0.0.0} ] [ %logger{40} %file:%line ] - %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+              value="${LOG_PATTERN:-%d{yyyy-MM-dd HH:mm:ss.SSS} [ %-5level ] [ %-21thread ] [ ${PID:-0} - %mdc{sessionId:-0} ] [ %mdc{username:-System} - %mdc{ipAddress:-0.0.0.0} ] [ %logger{40} %file:%line ] - %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
 </included>

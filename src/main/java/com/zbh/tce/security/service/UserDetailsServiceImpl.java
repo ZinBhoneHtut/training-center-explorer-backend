@@ -1,7 +1,6 @@
 package com.zbh.tce.security.service;
 
 import com.zbh.tce.entity.User;
-import com.zbh.tce.repository.UserRepository;
 import com.zbh.tce.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

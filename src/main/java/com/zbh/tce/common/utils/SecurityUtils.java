@@ -55,7 +55,7 @@ public final class SecurityUtils {
         String localhost = "127.0.0.1";
 
         if (ip.contains(comma)) {
-            ip = ip.split(",")[0];
+            ip = ip.split(comma)[0];
         }
         if (localhost.equals(ip)) {
             //  Get the real IP address of  machine

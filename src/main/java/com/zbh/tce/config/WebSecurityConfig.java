@@ -2,7 +2,7 @@ package com.zbh.tce.config;
 
 import com.zbh.tce.common.constant.UrlConstant;
 import com.zbh.tce.security.jwt.AuthEntryPointJwt;
-import com.zbh.tce.security.jwt.AuthTokenFilter;
+import com.zbh.tce.security.jwt.JwtTokenFilter;
 import com.zbh.tce.security.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +28,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthEntryPointJwt unauthorizedHandler;
-    private final AuthTokenFilter authTokenFilter;
+    private final JwtTokenFilter jwtTokenFilter;
+    private final MDCFilter mdcFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -41,7 +42,8 @@ public class WebSecurityConfig {
                   .antMatchers("/api/*/user/**").hasRole("USER")
                   .anyRequest().authenticated())
             .authenticationProvider(authenticationProvider())
-            .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+            .addFilterAfter(mdcFilter, JwtTokenFilter.class);
         return http.build();
     }
 

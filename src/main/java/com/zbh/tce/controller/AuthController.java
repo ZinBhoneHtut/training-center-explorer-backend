@@ -38,6 +38,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest, HttpServletRequest httpServletRequest) {
+        log.trace("Inside login method");
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                 new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword());
         Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
@@ -62,6 +63,7 @@ public class AuthController {
 
     @PostMapping("/refreshtoken")
     public ResponseEntity<TokenRefreshResponse> refreshToken(@RequestBody TokenRefreshRequest request, HttpServletRequest httpServletRequest) {
+        log.trace("Inside refreshToken method");
         String requestRefreshToken = request.getRefreshToken();
         return refreshTokenService.findByTokenAndUserAgent(requestRefreshToken, httpServletRequest.getHeader(USER_AGENT_KEY))
                 .map(refreshTokenService::verifyExpiration)

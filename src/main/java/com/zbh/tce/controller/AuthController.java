@@ -8,15 +8,13 @@ import com.zbh.tce.security.dto.AuthResponse;
 import com.zbh.tce.security.dto.TokenRefreshRequest;
 import com.zbh.tce.security.dto.TokenRefreshResponse;
 import com.zbh.tce.security.jwt.JwtService;
+import com.zbh.tce.security.service.AuthenticationService;
 import com.zbh.tce.security.service.RefreshTokenService;
 import com.zbh.tce.security.service.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Slf4j
 @RestController
@@ -31,38 +30,22 @@ import javax.servlet.http.HttpServletRequest;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final AuthenticationManager authenticationManager;
-    private final RefreshTokenService refreshTokenService;
     private final JwtService jwtService;
+    private final RefreshTokenService refreshTokenService;
+    private final AuthenticationService authenticationService;
     private static final String USER_AGENT_KEY = "user-agent";
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest, HttpServletRequest httpServletRequest) {
         log.trace("Inside login method");
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-                new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword());
-        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-        if (authentication.isAuthenticated()) {
-            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-            String accessToken = jwtService.generateJwtToken(authentication);
-            RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId(), httpServletRequest);
-            AuthResponse authResponse = AuthResponse.builder()
-                    .accessToken(accessToken)
-                    .refreshToken(refreshToken.getToken())
-                    .tokenType("Bearer")
-                    .build();
-            return new ResponseEntity<>(authResponse, HttpStatus.OK);
-        } else {
-            AuthResponse authResponse = AuthResponse.builder()
-                    .errorMsg("Invalid username or password")
-                    .errorCode(HttpStatus.BAD_REQUEST.name())
-                    .build();
-            return new ResponseEntity<>(authResponse, HttpStatus.BAD_REQUEST);
-        }
+        String userAgent = httpServletRequest.getHeader(USER_AGENT_KEY);
+        log.debug("User agent: {}", userAgent);
+        AuthResponse authResponse = authenticationService.authenticate(authRequest, userAgent);
+        return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }
 
     @PostMapping("/refreshtoken")
-    public ResponseEntity<TokenRefreshResponse> refreshToken(@RequestBody TokenRefreshRequest request, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<TokenRefreshResponse> refreshToken(@Valid @RequestBody TokenRefreshRequest request, HttpServletRequest httpServletRequest) {
         log.trace("Inside refreshToken method");
         String requestRefreshToken = request.getRefreshToken();
         return refreshTokenService.findByTokenAndUserAgent(requestRefreshToken, httpServletRequest.getHeader(USER_AGENT_KEY))

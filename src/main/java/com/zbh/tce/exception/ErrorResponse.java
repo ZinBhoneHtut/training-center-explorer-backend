@@ -14,6 +14,7 @@ public class ErrorResponse {
     private String status;
     private String message;
     private String details;
+    private String path;
 
     /**
      * Instantiates a new Error response.
@@ -23,11 +24,12 @@ public class ErrorResponse {
      * @param message   the message
      * @param details   the details
      */
-    public ErrorResponse(Date timestamp, String status, String message, String details) {
+    public ErrorResponse(Date timestamp, String status, String message, String details, String path) {
         this.timestamp = DateUtils.format(timestamp, "yyyy-MM-dd hh:mm:ss");
         this.status = status;
         this.message = message;
         this.details = details;
+        this.path = path;
     }
 
     public void setTimestamp(Date timestamp) {

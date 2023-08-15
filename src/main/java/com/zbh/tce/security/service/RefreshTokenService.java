@@ -1,6 +1,7 @@
 package com.zbh.tce.security.service;
 
 import com.zbh.tce.entity.RefreshToken;
+import com.zbh.tce.exception.ResourceNotFoundException;
 import com.zbh.tce.exception.TokenRefreshException;
 import com.zbh.tce.repository.RefreshTokenRepository;
 import com.zbh.tce.repository.UserRepository;
@@ -9,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
@@ -31,12 +31,12 @@ public class RefreshTokenService {
         return refreshTokenRepository.findByTokenAndUserAgent(token, userAgent);
     }
 
-    public RefreshToken createRefreshToken(Long userId, HttpServletRequest httpServletRequest) {
-        String userAgent = httpServletRequest.getHeader("user-agent");
+    public RefreshToken createRefreshToken(Long userId, String userAgent) {
         RefreshToken refreshToken = refreshTokenRepository.findByUserAgent(userAgent).orElse(
                 RefreshToken.builder()
-                        .user(userRepository.findById(userId).get())
-                        .userAgent(httpServletRequest.getHeader("user-agent"))
+                        .user(userRepository.findById(userId)
+                                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: "+ userId)))
+                        .userAgent(userAgent)
                         .build()
         );
         refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));

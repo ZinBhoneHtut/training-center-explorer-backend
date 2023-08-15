@@ -25,10 +25,10 @@ public class JwtService {
 
     public String generateJwtToken(Authentication authentication) {
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-        return this.generateTokenFromUsername(userPrincipal.getUsername());
+        return this.generateTokenWithUsername(userPrincipal.getUsername());
     }
 
-    public String generateTokenFromUsername(String username) {
+    public String generateTokenWithUsername(String username) {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())

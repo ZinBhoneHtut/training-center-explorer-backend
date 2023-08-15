@@ -1,5 +1,6 @@
 package com.zbh.tce.controller;
 
+import com.zbh.tce.common.constant.UrlConstant;
 import com.zbh.tce.entity.RefreshToken;
 import com.zbh.tce.exception.TokenRefreshException;
 import com.zbh.tce.security.dto.AuthRequest;
@@ -26,7 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
 @RestController
-@RequestMapping("/auth")
+@RequestMapping(UrlConstant.API_V1_AUTH)
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -66,7 +67,7 @@ public class AuthController {
                 .map(refreshTokenService::verifyExpiration)
                 .map(RefreshToken::getUser)
                 .map(user -> {
-                    String token = jwtService.generateTokenFromUsername(user.getName());
+                    String token = jwtService.generateTokenWithUsername(user.getName());
                     return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
                 })
                 .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,

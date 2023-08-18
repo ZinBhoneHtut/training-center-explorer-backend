@@ -7,8 +7,10 @@ import com.zbh.tce.entity.enums.RoleEnum;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -43,6 +45,10 @@ public class Role implements IAudit {
     public Role(RoleEnum roleEnum, String description) {
         this.roleName = roleEnum;
         this.description = description;
+    }
+
+    public List<SimpleGrantedAuthority> getAuthorities() {
+        return this.roleName.getAuthorities();
     }
 
     @Override

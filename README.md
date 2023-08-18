@@ -22,7 +22,7 @@ The Training Center Explorer Backend is an ongoing Java application developed us
 2. Navigate to the project directory: `cd training-center-explorer-backend`
 3. Configure MySQL Database:
     - Create a MySQL schema named `tce_db`.
-    - Update `application.properties` with your MySQL username and password.
+    - Update `application-dev.properties` with your MySQL username and password.
 4. Build and run the project: `mvnw spring-boot:run`
 
 ## Usage

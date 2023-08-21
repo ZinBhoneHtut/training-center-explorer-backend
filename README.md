@@ -54,7 +54,11 @@ This project is licensed under the Apache License. See the [LICENSE](LICENSE) fi
 
 ## Current Status
 
-The project is ongoing, focusing initially on user CRUD operations and secure authentication using JWT tokens and refresh tokens. Future plans include expanding the functionality and scope of the project.
+- User CRUD operations are implemented.
+- Secure authentication using JWT tokens and refresh tokens is in place.
+- Comprehensive authorization mechanisms have been added.
+
+Future plans include expanding the functionality and scope of the project.
 
 ## Contributions
 

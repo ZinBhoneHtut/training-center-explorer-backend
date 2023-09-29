@@ -36,7 +36,7 @@ public class AuthController {
     private static final String USER_AGENT_KEY = "user-agent";
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authRequest, HttpServletRequest httpServletRequest) {
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody AuthRequest authRequest, HttpServletRequest httpServletRequest) {
         log.trace("Inside login method");
         String userAgent = httpServletRequest.getHeader(USER_AGENT_KEY);
         log.debug("User agent: {}", userAgent);

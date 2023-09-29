@@ -13,7 +13,7 @@ public class ErrorResponse {
     private String timestamp;
     private String status;
     private String message;
-    private String details;
+    private String description;
     private String path;
 
     /**
@@ -22,13 +22,13 @@ public class ErrorResponse {
      * @param timestamp the timestamp
      * @param status    the status
      * @param message   the message
-     * @param details   the details
+     * @param description   the details
      */
-    public ErrorResponse(Date timestamp, String status, String message, String details, String path) {
+    public ErrorResponse(Date timestamp, String status, String message, String description, String path) {
         this.timestamp = DateUtils.format(timestamp, "yyyy-MM-dd hh:mm:ss");
         this.status = status;
         this.message = message;
-        this.details = details;
+        this.description = description;
         this.path = path;
     }
 

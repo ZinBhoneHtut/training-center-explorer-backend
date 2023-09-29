@@ -73,8 +73,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new ErrorResponse(
                 new Date(),
                 HttpStatus.BAD_REQUEST.name(),
-                "Validation error",
                 String.join(", ", errorMessages),
+                "Validation error",
                 request.getDescription(false)
         ), HttpStatus.BAD_REQUEST);
     }
@@ -84,8 +84,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(new ErrorResponse(
                 new Date(),
                 HttpStatus.UNAUTHORIZED.name(),
-                exception.getMessage(),
                 "Invalid username or password",
+                exception.getMessage(),
                 request.getDescription(false)
         ), HttpStatus.UNAUTHORIZED);
     }
